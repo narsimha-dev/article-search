@@ -1,9 +1,9 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { IoMdOptions } from "react-icons/io";
 
- class FilterNewsDroupDown extends React.Component {
+class FilterNewsDroupDown extends React.Component {
   constructor(props) {
     super(props);
 
@@ -15,7 +15,7 @@ import { IoMdOptions } from "react-icons/io";
 
   toggle() {
     this.setState({
-      dropdownOpen: !this.state.dropdownOpen 
+      dropdownOpen: !this.state.dropdownOpen
     });
   }
 
@@ -23,7 +23,7 @@ import { IoMdOptions } from "react-icons/io";
     return (
       <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle caret>
-        <IoMdOptions/>Filter
+          <IoMdOptions />Filter
         </DropdownToggle>
         <DropdownMenu>
           <DropdownItem >Publish Date</DropdownItem>
@@ -35,7 +35,9 @@ import { IoMdOptions } from "react-icons/io";
   }
 }
 function mapStateToProps(state) {
-    return { "news": state.allNews,
-            "isLoading":state.isLoading};
-    }
-    export default connect(mapStateToProps)(FilterNewsDroupDown);
+  return {
+    "news": state.allNews,
+    "isLoading": state.isLoading
+  };
+}
+export default connect(mapStateToProps)(FilterNewsDroupDown);

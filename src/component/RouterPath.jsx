@@ -4,11 +4,11 @@ import SearchBar from './SearchBar';
 import FilterNewsDroupDown from './FilterNewsDroupDown';
 
 function RouterPath(params) {
-    return(
+    return (
         <Router>
-    <Route path="/" Component={SearchBar}/>      
-    <Route exact path="/filter" Component={FilterNewsDroupDown}/>
-    </Router>
+            <Route path="/" Component={SearchBar} />
+            <Route exact path="/filter" Component={FilterNewsDroupDown} />
+        </Router>
     )
 }
 export default RouterPath;

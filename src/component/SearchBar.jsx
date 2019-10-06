@@ -1,97 +1,67 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import {Row,Col} from 'reactstrap';
-import ReactSearchBox from 'react-search-box'
-import {loagNewsObject, search} from '../redux/actions/newsAction';
+import { connect } from 'react-redux';
+import { Col, FormGroup } from 'reactstrap';
+import { loagNewsObject, filterItems, searchText } from '../redux/actions/newsAction';
 import NewsCardView from './NewsCardView';
 import FilterNewsDroupDown from './FilterNewsDroupDown';
-import { IoIosSearch } from "react-icons/io";
+import customeDate from './customeDate';
 
 
 class SeachBar extends Component {
-
+  //fetching all news JSONP object
   componentDidMount() {
     this.props.dispatch(loagNewsObject())
   }
-  
-  search=(e)=>{
-    // const data=articles.filter(name =>(name.author || name.source.name) === e.target.value.toLowerCase())
-    // console.log("object: ", data)
-
-
+  // input searchText added store
+  search = (e) => {
+    this.props.dispatch(searchText(e.target.value))
   }
   render() {
-    const {articles} = this.props.news;
-    const names= articles && articles.map(item=>{
-     return [ //serch by author, publishedDate, siteLink 
+    const { articles } = this.props.news;
+    const names = articles && articles.map(item => {
+      return [ //serch by author, publishedDate, siteLink 
         {
-        key:item.author,
-        value:item.author
+          key: item.author,
+          value: item.author
         },
         {
-          key:this.customeDate(item.publishedAt),
-          value:this.customeDate(item.publishedAt)
+          key: customeDate(item.publishedAt),
+          value: customeDate(item.publishedAt)
         },
         {
-          key:item.source.name,
-          value:item.source.name
+          key: item.source.name,
+          value: item.source.name
         }
       ]
     });
-    //console.log("object: ", names);
-    return (
-      <>
-      <div className="container">
-        <Row>
-          <Col sm={7}>
-            {console.log(names)}
-            <ReactSearchBox placeholder="&#xF002" value={names} data={names} callback={record => console.log(record)}/>
+    return <div className="container">
+      {!this.props.isLoading ? <div className="spinner-border text-primary" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+        : <>
+        <FormGroup row>
+          <Col sm={10}>
+            {this.load(names)}
+            <input type="text" placeholder="Search..." value={this.props.searchText} onChange={(e) => this.search(e)} />
           </Col>
-          <Col sm={3}>
-            <FilterNewsDroupDown/>
-            </Col>
-            </Row>
-            <br/><br/>
-          <NewsCardView articles={articles}/>
-          </div>  
-          </>
-    );
+          <Col><FilterNewsDroupDown /></Col>
+        </FormGroup>
+          <br /><br />
+          <NewsCardView articles={articles} />
+        </>
+      }
+    </div>
   }
-  load=()=>{
-return  this.props.articles && this.props.articles.map(item=>{
-  return [ //serch by author, publishedDate, siteLink 
-     {
-     key:item.author,
-     value:item.author
-     },
-     {
-       key:this.customeDate(item.publishedAt),
-       value:this.customeDate(item.publishedAt)
-     },
-     {
-       key:item.source.name,
-       value:item.source.name
-     }
-   ]
- });
+  load = (names) => {
+    this.props.dispatch(filterItems(names));
   }
-  customeDate = (publishwdDate) => {
-    const date = new Date(publishwdDate);
-    const year = date.getFullYear();
-    let month = (1 + date.getMonth()).toString();
-    month = month.length > 1 ? month : '0' + month;
-    let day = date.getDate().toString();
-    day = day.length > 1 ? day : '0' + day;
-    return day + "/" + month + "/" + year;
-  }
-} 
+}
 
 function mapStateToProps(state) {
-  const { items, searchText } = state.searchSimple;
   return {
-      filteredItems: items.filter((item) => item.startsWith(searchText)),
-      "news": state.allNews,
-        "isLoading":state.isLoading
+    "news": state.allNews,
+    "isLoading": state.isLoading,
+    "searchText": state.searchText
   };
 }
 export default connect(mapStateToProps)(SeachBar);
