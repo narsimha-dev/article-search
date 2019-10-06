@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Col, FormGroup } from 'reactstrap';
+import { Form, Input } from 'reactstrap';
 import { loagNewsObject, filterItems, searchText } from '../redux/actions/newsAction';
 import NewsCardView from './NewsCardView';
 import FilterNewsDroupDown from './FilterNewsDroupDown';
@@ -35,21 +35,26 @@ class SeachBar extends Component {
       ]
     });
     return <div className="container">
-      {!this.props.isLoading ? <div className="spinner-border text-primary" role="status">
-        <span className="sr-only">Loading...</span>
-      </div>
-        : <>
-        <FormGroup row>
-          <Col sm={10}>
+
+      <div className="row">
+        <div className="col-sm-8">{!this.props.isLoading ? <div className="spinner-border text-primary" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+          : <>
             {this.load(names)}
-            <input type="text" placeholder="Search..." value={this.props.searchText} onChange={(e) => this.search(e)} />
-          </Col>
-          <Col><FilterNewsDroupDown /></Col>
-        </FormGroup>
-          <br /><br />
-          <NewsCardView articles={articles} />
-        </>
-      }
+            <Form>
+            <Input type="text" placeholder="Search..." value={this.props.searchText} onChange={(e) => this.search(e)} />
+            </Form>
+            <br /><br />
+            <NewsCardView articles={articles} />
+          </>
+        }</div>
+        <div className="col-sm-4"><FilterNewsDroupDown /></div>
+      </div>
+
+
+
+
     </div>
   }
   load = (names) => {
