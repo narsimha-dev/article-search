@@ -1,28 +1,33 @@
 import React, { Component } from 'react';
-//import Axios from 'axios';
 import {connect} from 'react-redux';
-import {Button} from 'reactstrap';
-
+import {Row,Col} from 'reactstrap';
 import {loagNewsObject, search} from '../redux/actions/newsAction';
 import NewsCardView from './NewsCardView';
+import FilterNewsDroupDown from './FilterNewsDroupDown';
 
 class SearchBar extends Component {
- 
-  handleclick=()=>{
+
+  componentDidMount() {
     this.props.dispatch(loagNewsObject())
   }
   render() {
-    const {articles,totalResults} = this.props.news;
-console.log(totalResults)
+    const {articles} = this.props.news;
+
     return (
       <>
-        <input
+        <Row>
+          <Col sm={7}><input
           className="form-control"
           placeholder = "Procurar Trabalho"
           onChange={(e) => this.props.dispatch(search(e.target.value))}
           value={articles} />
-          <Button color="success" onClick={this.handleclick}>GET NEWS</Button>
-     {this.props.isLoading && <NewsCardView articles={articles}/> } 
+          </Col>
+          <Col sm={3}>
+            <FilterNewsDroupDown/>
+            </Col>
+            </Row>
+            <br/><br/>
+          <NewsCardView articles={articles}/>  
           </>
     );
   }

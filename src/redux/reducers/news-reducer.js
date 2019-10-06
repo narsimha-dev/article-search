@@ -1,9 +1,10 @@
-import {SEARCH,NEWS_SOURCE} from '../actions/actionsTypes';
+import {SEARCH,NEWS_SOURCE,CARD_IMAGE} from '../actions/actionsTypes';
 
 const initialState = {
  allNews:[],
  message:'',
- isLoading:false
+ isLoading:false,
+ image:[],
 };
 
 export default function reducer(state = initialState, action) {
@@ -14,7 +15,9 @@ export default function reducer(state = initialState, action) {
       return {...state, value, works};
     }
     case NEWS_SOURCE:
-      return {...state, allNews:action.allNews,message:action.successMessage, isLoading:!state.isLoading}
+      return {...state, allNews:action.allNews,message:action.successMessage, isLoading:!state.isLoading};
+    case CARD_IMAGE:
+      return {...state, image:action.image};
     default:
       return state;
   }

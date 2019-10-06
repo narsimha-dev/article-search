@@ -1,26 +1,21 @@
 import React from 'react';
 // import {Router,Link} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 
 class NewsCardView extends React.Component {
 
 
     render() {
         const { articles } = this.props;
-        const data = articles.map((article, id) => {
+        const data = articles && articles.map((article, id) => {
             return <Card key={id}>
-                <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
-                <CardBody>
-                    <CardTitle>{this.customeDate(article.publishedAt)}</CardTitle>
-                    <CardSubtitle>{article.author}</CardSubtitle>
-                    <CardText>{article.content}</CardText><br />
-                    <CardSubtitle>{article.source.name}</CardSubtitle>
-                        {/* <Router>
-                            <Link to={article.source.name}/>
-                            </Router>
-                            </CardSubtitle> */}
-                    <Button>Narsimha</Button>
+                <CardImg className="" top width="100%" src={this.formatImageUrl(article.urlToImage + "?mocky-delay=100ms")} alt={article.source.name} />
+                <CardBody className="">
+                    <CardTitle className="">{this.customeDate(article.publishedAt)}</CardTitle>
+                    <CardSubtitle className="">{article.author}</CardSubtitle>
+                    <CardText className="">{article.content}</CardText><br />
+                    <CardSubtitle className=""><u>{article.source.name}</u></CardSubtitle>
                 </CardBody>
             </Card>
         })
@@ -30,6 +25,11 @@ class NewsCardView extends React.Component {
                 {data}
             </div>
         );
+    }
+    formatImageUrl(url) {
+        const width = '100%'
+        const height = '100%'
+        return url.replace('{width}', width).replace('{height}', height)
     }
     customeDate = (publishwdDate) => {
         const date = new Date(publishwdDate);

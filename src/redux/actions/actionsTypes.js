@@ -1,4 +1,6 @@
 export const SEARCH="SEARCH";
+
+export const CARD_IMAGE="CARD_IMAGE";
 export const NEWS_SOURCE="NEWS_SOURCE";
 export const NEWS_AUTHOR="NEWS_AUTHOR";
 export const NEWS_TITLE="NEWS_TITLE";
