@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {NEWS_SOURCE, NEWS_ERROR_RECEIVE, SEARCH}  from './actionsTypes';
+import {NEWS_SOURCE, NEWS_ERROR_RECEIVE, SEARCH, SET_VISIBILITY_FILTER,SHOW_ACTIVE,SHOW_ALL,SHOW_COMPLETED}  from './actionsTypes';
 
 
 const URL="http://www.mocky.io/v2/5d8686a032000024b607b40e?callback?myfunction";
@@ -39,4 +39,7 @@ export function invaldNewsORGetting(error) {
         .catch(error=>dispatch(invaldNewsORGetting(error)))
     }
   }
-
+  export function filteredItems(state) {
+    const { items, searchText } = state.searchSimple;
+    return items.filter((item) => item.startsWith(searchText));
+}

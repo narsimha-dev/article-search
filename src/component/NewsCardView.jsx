@@ -1,6 +1,6 @@
 import React from 'react';
-// import {Router,Link} from 'react-router-dom';
 import { connect } from 'react-redux';
+import '../css/style.css';
 import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 
 class NewsCardView extends React.Component {
@@ -9,20 +9,26 @@ class NewsCardView extends React.Component {
     render() {
         const { articles } = this.props;
         const data = articles && articles.map((article, id) => {
-            return <Card key={id}>
-                <CardImg className="" top width="100%" src={this.formatImageUrl(article.urlToImage + "?mocky-delay=100ms")} alt={article.source.name} />
+            return <div className="container"  key={id}>
+            { article.urlToImage && 
+                <Card className="custome card">
+                <CardImg className="imageView" top width="100%" src={this.formatImageUrl(article.urlToImage + "?mocky-delay=100ms")} alt={article.source.name} />
                 <CardBody className="">
-                    <CardTitle className="">{this.customeDate(article.publishedAt)}</CardTitle>
-                    <CardSubtitle className="">{article.author}</CardSubtitle>
-                    <CardText className="">{article.content}</CardText><br />
-                    <CardSubtitle className=""><u>{article.source.name}</u></CardSubtitle>
+                    <CardTitle className="publishedAt">{this.customeDate(article.publishedAt)}</CardTitle>
+                    <CardSubtitle className="author"><b>{article.author}</b></CardSubtitle>
+                    <CardText className="content">{article.content}</CardText><br />
+                    <CardSubtitle className="source"><u>{article.source.name}</u></CardSubtitle>
                 </CardBody>
             </Card>
+            }
+            <br/>
+        </div>
         })
 
         return (
             <div>
                 {data}
+                <br/>
             </div>
         );
     }

@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-// IoMdOptions
+import { IoMdOptions } from "react-icons/io";
+
  class FilterNewsDroupDown extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +15,7 @@ import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reac
 
   toggle() {
     this.setState({
-      dropdownOpen: !this.state.dropdownOpen
+      dropdownOpen: !this.state.dropdownOpen 
     });
   }
 
@@ -22,14 +23,12 @@ import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reac
     return (
       <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle caret>
-        Filter
+        <IoMdOptions/>Filter
         </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem header>Header</DropdownItem>
-          <DropdownItem disabled>Action</DropdownItem>
-          <DropdownItem>Another Action</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem>Another Action</DropdownItem>
+          <DropdownItem >Publish Date</DropdownItem>
+          <DropdownItem >Author Name</DropdownItem>
+          <DropdownItem >News SiteName</DropdownItem>
         </DropdownMenu>
       </ButtonDropdown>
     );

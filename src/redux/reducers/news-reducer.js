@@ -1,10 +1,12 @@
-import {SEARCH,NEWS_SOURCE,CARD_IMAGE} from '../actions/actionsTypes';
+import {SEARCH,NEWS_SOURCE,CARD_IMAGE,SEARCH_TEXT} from '../actions/actionsTypes';
 
 const initialState = {
  allNews:[],
  message:'',
  isLoading:false,
  image:[],
+ searchText: '',
+    items: [ 'hello', 'wahhh', 'yo' ]
 };
 
 export default function reducer(state = initialState, action) {
@@ -18,6 +20,10 @@ export default function reducer(state = initialState, action) {
       return {...state, allNews:action.allNews,message:action.successMessage, isLoading:!state.isLoading};
     case CARD_IMAGE:
       return {...state, image:action.image};
+      case SEARCH_TEXT:
+            return Object.assign({}, state, {
+                searchText: action.text
+            });
     default:
       return state;
   }
